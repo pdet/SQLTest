@@ -1,0 +1,36 @@
+<idea-plugin>
+    <id>pholanda.github.io</id>
+    <name>SQLTest</name>
+    <version>1.0</version>
+    <vendor email="holanda@cwi.nl" url="pdet.github.io">CWI</vendor>
+
+    <description><![CDATA[This is an extension for CLION that provides language support for sqllogictest, a text-driven testing framework for SQL databases.]]></description>
+
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Simple File" implementationClass="org.intellij.sdk.language.TestFileType"
+                  fieldName="INSTANCE" language="Test" extensions="test"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.parserDefinition language="Test"
+                               implementationClass="org.intellij.sdk.language.TestParserDefinition"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.syntaxHighlighterFactory language="Test"
+                                       implementationClass="org.intellij.sdk.language.TestSyntaxHighlighterFactory"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <colorSettingsPage implementation="org.intellij.sdk.language.SimpleColorSettingsPage"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
