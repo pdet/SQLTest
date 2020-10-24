@@ -12,18 +12,18 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Simple File" implementationClass="org.intellij.sdk.language.TestFileType"
+        <fileType name="Test File" implementationClass="org.intellij.sdk.language.SQLTestFileType"
                   fieldName="INSTANCE" language="Test" extensions="test"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
         <lang.parserDefinition language="Test"
-                               implementationClass="org.intellij.sdk.language.TestParserDefinition"/>
+                               implementationClass="org.intellij.sdk.language.SQLTestParserDefinition"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
         <lang.syntaxHighlighterFactory language="Test"
-                                       implementationClass="org.intellij.sdk.language.TestSyntaxHighlighterFactory"/>
+                                       implementationClass="org.intellij.sdk.language.SQLTestSyntaxHighlighterFactory"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">

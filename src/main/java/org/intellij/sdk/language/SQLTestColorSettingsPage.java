@@ -11,42 +11,31 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.util.Map;
 
-public class TestColorSettingsPage implements ColorSettingsPage {
+public class SQLTestColorSettingsPage implements ColorSettingsPage {
 
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Key", TestSyntaxHighlighter.KEY),
-            new AttributesDescriptor("Separator", TestSyntaxHighlighter.SEPARATOR),
-            new AttributesDescriptor("Value", TestSyntaxHighlighter.VALUE),
-            new AttributesDescriptor("Bad Value", TestSyntaxHighlighter.BAD_CHARACTER)
+            new AttributesDescriptor("Key", SQLTestSyntaxHighlighter.KEY),
+            new AttributesDescriptor("Separator", SQLTestSyntaxHighlighter.RESERVED),
+            new AttributesDescriptor("Value", SQLTestSyntaxHighlighter.VALUE),
+            new AttributesDescriptor("Bad Value", SQLTestSyntaxHighlighter.BAD_CHARACTER)
     };
 
     @Nullable
     @Override
     public Icon getIcon() {
-        return TestIcons.FILE;
+        return SQLTestIcons.FILE;
     }
 
     @NotNull
     @Override
     public SyntaxHighlighter getHighlighter() {
-        return new TestSyntaxHighlighter();
+        return new SQLTestSyntaxHighlighter();
     }
 
     @NotNull
     @Override
     public String getDemoText() {
-        return "# You are reading the \".properties\" entry.\n" +
-                "! The exclamation mark can also mark text as comments.\n" +
-                "website = https://en.wikipedia.org/\n" +
-                "language = English\n" +
-                "# The backslash below tells the application to continue reading\n" +
-                "# the value onto the next line.\n" +
-                "message = Welcome to \\\n" +
-                "          Wikipedia!\n" +
-                "# Add spaces to the key\n" +
-                "key\\ with\\ spaces = This is the value that could be looked up with the key \"key with spaces\".\n" +
-                "# Unicode\n" +
-                "tab : \\u0009";
+        return " ";
     }
 
     @Nullable

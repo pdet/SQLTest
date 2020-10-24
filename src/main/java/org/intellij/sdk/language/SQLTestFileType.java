@@ -6,12 +6,12 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class TestFileType extends LanguageFileType {
+public class SQLTestFileType extends LanguageFileType {
 
-    public static final TestFileType INSTANCE = new TestFileType();
+    public static final SQLTestFileType INSTANCE = new SQLTestFileType();
 
-    private TestFileType() {
-        super(TestLanguage.INSTANCE);
+    private SQLTestFileType() {
+        super(SQLTestLanguage.INSTANCE);
     }
 
     @NotNull
@@ -35,7 +35,7 @@ public class TestFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return TestIcons.FILE;
+        return SQLTestIcons.FILE;
     }
 
 }

@@ -12,10 +12,10 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
-public class TestSyntaxHighlighter extends SyntaxHighlighterBase {
+public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
 
-    public static final TextAttributesKey SEPARATOR =
-            createTextAttributesKey("TEST_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    public static final TextAttributesKey RESERVED =
+            createTextAttributesKey("TEST_RESERVED", DefaultLanguageHighlighterColors.METADATA);
     public static final TextAttributesKey KEY =
             createTextAttributesKey("TEST_KEY", DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey VALUE =
@@ -24,11 +24,14 @@ public class TestSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("TEST_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
     public static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("TEST_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
-
+    public static final TextAttributesKey QUERY =
+            createTextAttributesKey("TEST_Query", HighlighterColors.TEXT);
 
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
-    private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
+    private static final TextAttributesKey[] RESERVED_KEYS = new TextAttributesKey[]{RESERVED};
     private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
+    private static final TextAttributesKey[] QUERY_KEYS = new TextAttributesKey[]{QUERY};
+
     private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
@@ -36,22 +39,24 @@ public class TestSyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public Lexer getHighlightingLexer() {
-        return new TestLexerAdapter();
+        return new SQLTestLexerAdapter();
     }
 
     @NotNull
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        if (tokenType.equals(TestTypes.SEPARATOR)) {
-            return SEPARATOR_KEYS;
-        } else if (tokenType.equals(TestTypes.KEY)) {
+        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.ENDLOOP)|| tokenType.equals(TestTypes.STATEMENT)) {
+            return RESERVED_KEYS;
+        } else if (tokenType.equals(TestTypes.ID)) {
             return KEY_KEYS;
-        } else if (tokenType.equals(TestTypes.VALUE)) {
+        } else if (tokenType.equals(TestTypes.NUMBER) || tokenType.equals(TestTypes.STATEMENT_VALUE)) {
             return VALUE_KEYS;
         } else if (tokenType.equals(TestTypes.COMMENT)) {
             return COMMENT_KEYS;
         } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             return BAD_CHAR_KEYS;
+        } else if (tokenType.equals(TestTypes.QUERY)){
+            return QUERY_KEYS;
         } else {
             return EMPTY_KEYS;
         }

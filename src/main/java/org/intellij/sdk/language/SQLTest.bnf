@@ -1,0 +1,46 @@
+{
+  parserClass="org.intellij.sdk.language.parser.TestParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Test"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.intellij.sdk.language.psi"
+  psiImplPackage="org.intellij.sdk.language.psi.impl"
+
+  elementTypeHolderClass="org.intellij.sdk.language.psi.TestTypes"
+  elementTypeClass="org.intellij.sdk.language.psi.TestElementType"
+  tokenTypeClass="org.intellij.sdk.language.psi.TestTokenType"
+
+  psiImplUtilClass="org.intellij.sdk.language.psi.impl.TestPsiImplUtil"
+
+
+  tokens=[
+    SEMI=';'
+    EQ='='
+    LP='('
+    RP=')'
+    space='regexp:\s+'
+    loop = 'loop'
+    endloop = 'endloop'
+    statement = 'statement'
+    comment='regexp:#.*'
+    number='regexp:\d+(\.\d*)?'
+    id='regexp:\p{Alpha}\w*'
+    string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
+    query = "regexp:.*\;"
+  ]
+//  name(".*expr")='expression'
+//  extends(".*expr")=expr
+}
+
+testFile ::= item_ *
+
+private item_ ::= !<<eof>> (comment| property_loop) item_?
+
+property_loop ::= loop id number number  property_statement endloop
+
+statement_value ::='ok'|'error'
+
+property_statement ::= STATEMENT  statement_value  query
+
