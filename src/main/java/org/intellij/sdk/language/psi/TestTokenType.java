@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 public class TestTokenType extends IElementType {
-
+    String debugName;
     public TestTokenType(@NotNull @NonNls String debugName) {
         super(debugName, SQLTestLanguage.INSTANCE);
     }

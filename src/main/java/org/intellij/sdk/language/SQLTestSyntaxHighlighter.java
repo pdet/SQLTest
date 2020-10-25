@@ -1,5 +1,6 @@
 package org.intellij.sdk.language;
 
+import com.intellij.lang.TokenWrapper;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
@@ -45,17 +46,17 @@ public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.ENDLOOP)|| tokenType.equals(TestTypes.STATEMENT)) {
+        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.LOAD) || tokenType.equals(TestTypes.ENDLOOP)|| tokenType.equals(TestTypes.STATEMENT) || tokenType.equals(TestTypes.QUERY)) {
             return RESERVED_KEYS;
-        } else if (tokenType.equals(TestTypes.ID)) {
+        } else if (tokenType.equals(TestTypes.ID)|| tokenType.equals(TestTypes.QUERY_RETURN_TYPE)) {
             return KEY_KEYS;
-        } else if (tokenType.equals(TestTypes.NUMBER) || tokenType.equals(TestTypes.STATEMENT_VALUE)) {
+        } else if (tokenType.equals(TestTypes.NUMBER) || tokenType.equals(TestTypes.STATEMENT_VALUE) || tokenType.equals(TestTypes.QUERY_SORT_MODE) || tokenType.equals(TestTypes.QUERY_LABEL)) {
             return VALUE_KEYS;
         } else if (tokenType.equals(TestTypes.COMMENT)) {
             return COMMENT_KEYS;
         } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             return BAD_CHAR_KEYS;
-        } else if (tokenType.equals(TestTypes.QUERY)){
+        } else if (tokenType.equals(TestTypes.QUERY_REGEX)){
             return QUERY_KEYS;
         } else {
             return EMPTY_KEYS;

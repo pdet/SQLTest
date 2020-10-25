@@ -11,6 +11,7 @@ import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.TokenType;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
 import org.intellij.sdk.language.parser.TestParser;
@@ -18,10 +19,13 @@ import org.intellij.sdk.language.psi.TestFile;
 import org.intellij.sdk.language.psi.TestTypes;
 import org.jetbrains.annotations.NotNull;
 
+import static com.intellij.psi.tree.TokenSet.forAllMatching;
+
 public class SQLTestParserDefinition implements ParserDefinition {
 
     public static final TokenSet WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE);
     public static final TokenSet COMMENTS = TokenSet.create(TestTypes.COMMENT);
+    public static final TokenSet ANY = forAllMatching(IElementType.TRUE);
 
     public static final IFileElementType FILE = new IFileElementType(SQLTestLanguage.INSTANCE);
 

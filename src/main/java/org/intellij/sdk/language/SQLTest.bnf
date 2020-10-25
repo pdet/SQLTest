@@ -11,36 +11,45 @@
   elementTypeHolderClass="org.intellij.sdk.language.psi.TestTypes"
   elementTypeClass="org.intellij.sdk.language.psi.TestElementType"
   tokenTypeClass="org.intellij.sdk.language.psi.TestTokenType"
-
+    parserImports=["static com.intellij.lang.parser.GeneratedParserUtilBase.*"]
   psiImplUtilClass="org.intellij.sdk.language.psi.impl.TestPsiImplUtil"
-
+  parserUtilClass="org.intellij.sdk.language.SQLTestParserUtil"
 
   tokens=[
+  WHITE_SPACE='regexp:\n'
     SEMI=';'
     EQ='='
     LP='('
     RP=')'
-    space='regexp:\s+'
+    space=' '
+    tab = '\t'
+    tempdb='kkk'
+
     loop = 'loop'
     endloop = 'endloop'
     statement = 'statement'
     comment='regexp:#.*'
     number='regexp:\d+(\.\d*)?'
-    id='regexp:\p{Alpha}\w*'
+    id='regexp::?\p{Alpha}\w*:?'
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
-    query = "regexp:.*\;"
+    query_regex = "regexp:.*\;"
+    query = 'query'
+    query_return_type = "regexp:[TIR]*\s"
+    query_label = "regexp:label.*\s"
+    load = 'load'
   ]
-//  name(".*expr")='expression'
-//  extends(".*expr")=expr
 }
 
 testFile ::= item_ *
 
-private item_ ::= !<<eof>> (comment| property_loop) item_?
+private item_ ::= !<<eof>> (comment| property_loop|query_statement|load_statement) item_?
 
-property_loop ::= loop id number number  property_statement endloop
-
+property_loop ::= loop space id space number space number  property_statement endloop
+external tsv_line_rule ::= sqlResults
+external sql_query_rule ::= sqlQuery
 statement_value ::='ok'|'error'
-
-property_statement ::= STATEMENT  statement_value  query
+query_sort_mode ::= 'nosort'|'rowsort'|'valuesort'
+query_statement ::= query space query_return_type [(query_sort_mode [space query_label])|query_label] sql_query_rule '____' tsv_line_rule
+property_statement ::= STATEMENT space statement_value  query_regex
+load_statement ::= load space id
 
