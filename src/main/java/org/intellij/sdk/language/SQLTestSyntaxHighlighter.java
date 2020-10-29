@@ -27,6 +27,8 @@ public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("TEST_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
     public static final TextAttributesKey QUERY =
             createTextAttributesKey("TEST_Query", HighlighterColors.TEXT);
+    public static final TextAttributesKey SQL =
+            createTextAttributesKey("TEST_SQL",  DefaultLanguageHighlighterColors.CONSTANT);
 
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
     private static final TextAttributesKey[] RESERVED_KEYS = new TextAttributesKey[]{RESERVED};
@@ -35,6 +37,7 @@ public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
 
     private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
+    private static final TextAttributesKey[] SQL_KEYS = new TextAttributesKey[]{SQL};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
     @NotNull
@@ -46,18 +49,18 @@ public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.LOAD) || tokenType.equals(TestTypes.ENDLOOP)|| tokenType.equals(TestTypes.STATEMENT) || tokenType.equals(TestTypes.QUERY)) {
+        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.Q_RESULT) || tokenType.equals(TestTypes.RESTART)|| tokenType.equals(TestTypes.BEGIN)|| tokenType.equals(TestTypes.TRANSACTION) || tokenType.equals(TestTypes.ROLLBACK)||tokenType.equals(TestTypes.PRAGMA) ||tokenType.equals(TestTypes.RESTART) || tokenType.equals(TestTypes.LOAD) || tokenType.equals(TestTypes.ENDLOOP)|| tokenType.equals(TestTypes.STATEMENT) || tokenType.equals(TestTypes.QUERY)) {
             return RESERVED_KEYS;
         } else if (tokenType.equals(TestTypes.ID)|| tokenType.equals(TestTypes.QUERY_RETURN_TYPE)) {
             return KEY_KEYS;
-        } else if (tokenType.equals(TestTypes.NUMBER) || tokenType.equals(TestTypes.STATEMENT_VALUE) || tokenType.equals(TestTypes.QUERY_SORT_MODE) || tokenType.equals(TestTypes.QUERY_LABEL)) {
+        } else if (tokenType.equals(TestTypes.NUMBER) || tokenType.equals(TestTypes.QUERY_LABEL)) {
             return VALUE_KEYS;
         } else if (tokenType.equals(TestTypes.COMMENT)) {
             return COMMENT_KEYS;
         } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             return BAD_CHAR_KEYS;
-        } else if (tokenType.equals(TestTypes.QUERY_REGEX)){
-            return QUERY_KEYS;
+        } else if (tokenType.equals(TestTypes.SQL)){
+            return SQL_KEYS;
         } else {
             return EMPTY_KEYS;
         }

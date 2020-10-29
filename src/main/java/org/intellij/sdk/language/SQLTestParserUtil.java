@@ -28,22 +28,29 @@ public class SQLTestParserUtil {
             }
         }
     }
+
     public static boolean sqlResults(PsiBuilder builder, int level) {
-        boolean skip = false;
+        String text = builder.getTokenText();
+        IElementType cur = builder.getTokenType();
         IElementType x = builder.lookAhead(1);
         IElementType ID = new TestTokenType("id");
         IElementType NUMBER = new TestTokenType("number");
         IElementType EMPTY = new TestTokenType(" ");
-
-        while (true){
-            assert x != null;
-            if (!(x.toString().equals(ID.toString())  || x.toString().equals(NUMBER.toString())  || x.toString().equals(EMPTY.toString()))) break;
-            builder.advanceLexer();
-            x = builder.lookAhead(1);
-            skip = true;
+        if (cur != null){
+            while (cur.toString().equals(ID.toString()) || cur.toString().equals(NUMBER.toString()) || cur.toString().equals(EMPTY.toString())){
+                builder.advanceLexer();
+                cur = builder.getTokenType();
+                text = builder.getTokenText();
+            }
         }
-        if (skip){
+        return true;
+    }
+
+    public static boolean accept_all(PsiBuilder builder, int level) {
+        IElementType cur = builder.getTokenType();
+        if (cur != null){
             builder.advanceLexer();
+            cur = builder.getTokenType();
         }
         return true;
     }

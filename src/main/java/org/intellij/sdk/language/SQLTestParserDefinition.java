@@ -77,7 +77,7 @@ public class SQLTestParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiElement createElement(ASTNode node) {
-        return TestTypes.Factory.createElement(node);
+        return null;
     }
 
 }

@@ -16,15 +16,18 @@
   parserUtilClass="org.intellij.sdk.language.SQLTestParserUtil"
 
   tokens=[
-  WHITE_SPACE='regexp:\n'
     SEMI=';'
     EQ='='
     LP='('
     RP=')'
     space=' '
-    tab = '\t'
-    tempdb='kkk'
-
+    dot = '.'
+    minus = '-'
+    plus = '+'
+    comma = ','
+    star = '*'
+    less = '<'
+    higher = '>'
     loop = 'loop'
     endloop = 'endloop'
     statement = 'statement'
@@ -32,24 +35,37 @@
     number='regexp:\d+(\.\d*)?'
     id='regexp::?\p{Alpha}\w*:?'
     string="regexp:('([^'\\]|\\.)*'|\"([^\"\\]|\\.)*\")"
-    query_regex = "regexp:.*\;"
     query = 'query'
-    query_return_type = "regexp:[TIR]*\s"
-    query_label = "regexp:label.*\s"
+    query_return_type = "regexp:[TIR]+\s"
+    query_label = "regexp:label.+\s"
     load = 'load'
+    pragma = 'PRAGMA'
+    restart = 'restart'
+    begin = 'begin'
+    transaction = 'transaction'
+    rollback = 'rollback'
+    q_result = '----'
+
+
+    // SQL Keywords
+    sql = "regexp:(ADD|ALTER|AND|ANY|AS|ASC|BACKUP|BETWEEN|CASE|CHECK|CREATE|REPLACE|DELETE|DESC|COLUMN|CONSTRAINT|DROP|DATABASE|DEFAULT|EXEC|EXISTS|FOREIGN|FROM|FULL|GROUP|HAVING|IN|INDEX|INNER|INSERT|IS|LEFT|LIKE|LIMIT|NOT|OR|ORDER|BY|OUTER|PRIMARY|KEY|PROCEDURE|RIGHT|JOIN|ROWNUM|SELECT|DISTINCT|INTO|SET|TOP|TRUNCATE|TABLE|UNION|ALL|UNIQUE|UPDATE|VALUES|VIEW|WHERE)+\s"
   ]
 }
 
 testFile ::= item_ *
+external accept_all_rule ::= accept_all
+private item_ ::= !<<eof>> accept_all_rule
 
-private item_ ::= !<<eof>> (comment| property_loop|query_statement|load_statement) item_?
-
-property_loop ::= loop space id space number space number  property_statement endloop
-external tsv_line_rule ::= sqlResults
-external sql_query_rule ::= sqlQuery
-statement_value ::='ok'|'error'
-query_sort_mode ::= 'nosort'|'rowsort'|'valuesort'
-query_statement ::= query space query_return_type [(query_sort_mode [space query_label])|query_label] sql_query_rule '____' tsv_line_rule
-property_statement ::= STATEMENT space statement_value  query_regex
-load_statement ::= load space id
+//
+//private item_ ::= !<<eof>> (comment| property_loop|query_statement|load_statement|restart|property_statement) item_?
+//
+//property_loop ::= loop space id space number space number  property_statement endloop
+//external tsv_line_rule ::= sqlResults
+//external sql_query_rule ::= sqlQuery
+//statement_value ::='ok'|'error'
+//query_sort_mode ::= 'nosort'|'rowsort'|'valuesort'
+//pragma_rule ::= pragma space id
+//query_statement ::= query space query_return_type [(query_sort_mode [space query_label])|query_label] query_regex '----' tsv_line_rule
+//property_statement ::= STATEMENT space statement_value  (pragma_rule|query_regex)
+//load_statement ::= load space id
 
