@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'pdet.github.io'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
@@ -18,12 +18,5 @@ dependencies {
 intellij {
     version '2020.2.3'
 }
-patchPluginXml {
-    changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
-}
-
-
 
 sourceSets.main.java.srcDirs 'src/main/gen'

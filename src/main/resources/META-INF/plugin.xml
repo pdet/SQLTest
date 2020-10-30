@@ -4,8 +4,13 @@
     <version>1.0</version>
     <vendor email="holanda@cwi.nl" url="pdet.github.io">CWI</vendor>
 
-    <description><![CDATA[This is an extension for CLION that provides language support for sqllogictest, a text-driven testing framework for SQL databases.]]></description>
+    <description><![CDATA[This is an extension for Jetbrains that provides language support for sqllogictest, a text-driven testing framework for SQL databases.]]></description>
 
+
+    <!-- Description of changes in the latest version of the plugin.
+         Displayed in the "Plugins" settings dialog and the plugin repository Web interface.
+         Simple HTML elements can be included between <![CDATA[  ]]> tags.  -->
+    <change-notes>Initial release of the  SQLTest syntax highlight plugin for JetBrains.</change-notes>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
@@ -26,9 +31,6 @@
                                        implementationClass="org.intellij.sdk.language.SQLTestSyntaxHighlighterFactory"/>
     </extensions>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <colorSettingsPage implementation="org.intellij.sdk.language.SimpleColorSettingsPage"/>
-    </extensions>
 
     <actions>
         <!-- Add your actions here -->
