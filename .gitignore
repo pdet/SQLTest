@@ -8,4 +8,4 @@ idea-flex.skeleton
 jflex-1.7.0-2.jar
 src/main/gen
 src/main/java/org/intellij/sdk/language/SQLTestLexer.java~
-src/main/java/org/intellij/sdk/language/_TestLexer.flex
+.DS_Store

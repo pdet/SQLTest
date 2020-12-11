@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>pholanda.github.io</id>
     <name>SQLTest</name>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <vendor email="holanda@cwi.nl" url="pdet.github.io">CWI</vendor>
 
     <description><![CDATA[This is an extension for Jetbrains that provides language support for sqllogictest, a text-driven testing framework for SQL databases.]]></description>
@@ -14,8 +14,7 @@
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
-    <depends>com.intellij.modules.platform</depends>
-
+    <depends>com.intellij.modules.clion</depends>
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Test File" implementationClass="org.intellij.sdk.language.SQLTestFileType"
                   fieldName="INSTANCE" language="Test" extensions="test"/>
