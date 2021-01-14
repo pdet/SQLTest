@@ -49,7 +49,12 @@ public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.Q_RESULT) || tokenType.equals(TestTypes.RESTART)|| tokenType.equals(TestTypes.BEGIN)|| tokenType.equals(TestTypes.TRANSACTION) || tokenType.equals(TestTypes.ROLLBACK)||tokenType.equals(TestTypes.PRAGMA) ||tokenType.equals(TestTypes.RESTART) || tokenType.equals(TestTypes.LOAD) || tokenType.equals(TestTypes.ENDLOOP)|| tokenType.equals(TestTypes.STATEMENT) || tokenType.equals(TestTypes.QUERY)) {
+        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.Q_RESULT) ||
+                tokenType.equals(TestTypes.RESTART)|| tokenType.equals(TestTypes.BEGIN)||
+                tokenType.equals(TestTypes.TRANSACTION) || tokenType.equals(TestTypes.ROLLBACK)||
+                tokenType.equals(TestTypes.PRAGMA) || tokenType.equals(TestTypes.LOAD) ||
+                tokenType.equals(TestTypes.ENDLOOP)|| tokenType.equals(TestTypes.STATEMENT) ||
+                tokenType.equals(TestTypes.QUERY) || tokenType.equals(TestTypes.PHYSICAL_PLAN)) {
             return RESERVED_KEYS;
         } else if (tokenType.equals(TestTypes.ID)|| tokenType.equals(TestTypes.QUERY_RETURN_TYPE)) {
             return KEY_KEYS;

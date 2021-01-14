@@ -29,7 +29,7 @@ public class SQLTestFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getDefaultExtension() {
-        return "test";
+        return "test;testslow;test_slow";
     }
 
     @Nullable

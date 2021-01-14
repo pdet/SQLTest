@@ -17,6 +17,7 @@
 
   tokens=[
     SEMI=';'
+    DDOT=':'
     EQ='='
     LP='('
     RP=')'
@@ -45,6 +46,7 @@
     transaction = 'transaction'
     rollback = 'rollback'
     q_result = '----'
+    physical_plan = 'physical_plan'
 
 
     // SQL Keywords

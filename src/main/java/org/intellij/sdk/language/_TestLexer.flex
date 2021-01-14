@@ -39,6 +39,7 @@ SQL=(ADD|ALTER|AND|ANY|AS|ASC|BACKUP|BETWEEN|CASE|CHECK|CREATE|REPLACE|DELETE|DE
   {WHITE_SPACE}            { return WHITE_SPACE; }
 
   ";"                      { return SEMI; }
+  ":"                      { return DDOT; }
   "="                      { return EQ; }
   "("                      { return LP; }
   ")"                      { return RP; }
@@ -61,6 +62,7 @@ SQL=(ADD|ALTER|AND|ANY|AS|ASC|BACKUP|BETWEEN|CASE|CHECK|CREATE|REPLACE|DELETE|DE
   "transaction"            { return TRANSACTION; }
   "rollback"               { return ROLLBACK; }
   "----"                   { return Q_RESULT; }
+  "physical_plan"          { return PHYSICAL_PLAN; }
 
   {COMMENT}                { return COMMENT; }
   {NUMBER}                 { return NUMBER; }

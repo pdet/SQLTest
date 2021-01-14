@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>pholanda.github.io</id>
     <name>SQLTest</name>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <vendor email="holanda@cwi.nl" url="pdet.github.io">CWI</vendor>
 
     <description><![CDATA[This is an extension for Jetbrains that provides language support for sqllogictest, a text-driven testing framework for SQL databases.]]></description>
@@ -17,7 +17,7 @@
     <depends>com.intellij.modules.clion</depends>
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Test File" implementationClass="org.intellij.sdk.language.SQLTestFileType"
-                  fieldName="INSTANCE" language="Test" extensions="test"/>
+                  fieldName="INSTANCE" language="Test" extensions="test_slow;test;testslow"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -30,6 +30,9 @@
                                        implementationClass="org.intellij.sdk.language.SQLTestSyntaxHighlighterFactory"/>
     </extensions>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.commenter language="Test" implementationClass="org.intellij.sdk.language.SQLTestCommenter"/>
+    </extensions>
 
     <actions>
         <!-- Add your actions here -->
