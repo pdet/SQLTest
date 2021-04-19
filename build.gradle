@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'pdet.github.io'
-version '1.0.2'
+version '1.0.3'
 
 repositories {
     mavenCentral()
@@ -16,9 +16,8 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version 'LATEST-EAP-SNAPSHOT'
+    version '2021.1'
     type 'CL'
-    setPlugins("com.intellij.clion", "com.intellij.cidr.base")
 
 }
 
