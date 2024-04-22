@@ -34,6 +34,16 @@
         <lang.commenter language="Test" implementationClass="org.intellij.sdk.language.SQLTestCommenter"/>
     </extensions>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Test File"
+                  implementationClass="org.intellij.sdk.language.SQLTestFileType"
+                  language="SQLTestLanguage"
+                  fileTypeName="SQLTestFileType"
+                  description="Test language file"
+                  icon="SQLTestIcons.FILE"
+                  extensions="test;test_slow"/>
+    </extensions>
+
     <actions>
         <!-- Add your actions here -->
     </actions>

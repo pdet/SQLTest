@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'pdet.github.io'
-version '1.0.10'
+version '1.0.11'
 
 repositories {
     mavenCentral()
@@ -12,7 +12,7 @@ repositories {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version =  '2023.3'
+    version =  '2024.1'
     type = 'CL'
 }
 
@@ -20,4 +20,4 @@ intellij {
 // e.g., class file has wrong version 61.0, should be 55.0
 // https://www.baeldung.com/java-find-class-version
 // https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
-sourceSets.main.java.srcDirs 'src/main/gen' 
+sourceSets.main.java.srcDirs 'src/main/gen'
