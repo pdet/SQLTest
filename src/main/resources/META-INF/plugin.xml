@@ -41,7 +41,7 @@
                   fileTypeName="SQLTestFileType"
                   description="Test language file"
                   icon="SQLTestIcons.FILE"
-                  extensions="test;test_slow"/>
+                  extensions="test;test_slow;benchmark"/>
     </extensions>
 
     <actions>
