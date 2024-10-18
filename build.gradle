@@ -1,19 +1,30 @@
 plugins {
-    id 'java'
-    id 'org.jetbrains.intellij' version '1.16.1'
+  id("org.jetbrains.intellij.platform") version "2.1.0"
 }
 
 group 'pdet.github.io'
-version '1.0.12'
-
-repositories {
-    mavenCentral()
-}
+version '1.1.0'
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
-intellij {
-    version =  '2024.2'
-    type = 'CL'
+repositories {
+  mavenCentral()
+
+  intellijPlatform {
+    defaultRepositories()
+  }
+}
+
+java {
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
+}
+
+//https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
+dependencies {
+  intellijPlatform {
+    clion("2024.2")
+    instrumentationTools()
+  }
 }
 
 // Check if JDK is correct version for each release

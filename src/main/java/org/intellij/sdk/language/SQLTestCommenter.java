@@ -8,7 +8,7 @@ public class SQLTestCommenter implements Commenter {
     @Nullable
     @Override
     public String getLineCommentPrefix() {
-        return "#";
+        return "# ";
     }
 
     @Nullable
