@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>pholanda.github.io</id>
     <name>SQLTest</name>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
     <vendor email="holanda@cwi.nl" url="https://pdet.github.io">Pedro Holanda</vendor>
 
     <description><![CDATA[
@@ -12,18 +12,26 @@
             <li>Syntax highlighting for SQL keywords, directives, comments, strings, and numbers</li>
             <li>Proper result section handling (no highlighting bleed from query results)</li>
             <li>Code folding for statement/query blocks, loops, and result sections</li>
+            <li>Structure view — navigate between tests, loops, requires in the sidebar</li>
             <li>Supports .test, .test_slow, .testslow, .benchmark, and .slt files</li>
         </ul>
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>1.2.0</b>
+        <ul>
+            <li>Structure view: navigate statements, queries, loops, requires from sidebar</li>
+            <li>Query/statement entries show SQL preview (first line of SQL)</li>
+            <li>Code folding for statement/query blocks, loops, and foreach blocks</li>
+            <li>Context-aware highlighting: directives, SQL keywords, dimmed result output</li>
+            <li>New directives: require, require-env, mode, halt, skipif, onlyif, foreach, etc.</li>
+        </ul>
         <b>1.1.2</b>
         <ul>
             <li>Fix: apostrophe in query results no longer breaks syntax highlighting (#10)</li>
             <li>Added RESULT_SECTION lexer state for proper result section handling</li>
             <li>Expanded SQL keyword list with modern DuckDB keywords</li>
-            <li>Code folding for statement/query blocks, loops, and foreach blocks</li>
-            <li>New directive keywords: require, mode, halt, skipif, onlyif, foreach, etc.</li>
+            <li>GitHub Actions CI</li>
         </ul>
     ]]></change-notes>
 
@@ -47,5 +55,8 @@
 
         <lang.foldingBuilder language="Test"
                              implementationClass="org.intellij.sdk.language.SQLTestFoldingBuilder"/>
+
+        <lang.psiStructureViewFactory language="Test"
+                                      implementationClass="org.intellij.sdk.language.SQLTestStructureViewFactory"/>
     </extensions>
 </idea-plugin>
