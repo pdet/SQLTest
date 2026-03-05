@@ -1,12 +1,9 @@
-.gradle/
 .idea/
 build/
-gradle/
-gradlew
+.gradle/
 gradlew.bat
 idea-flex.skeleton
 jflex-1.7.0-2.jar
 src/main/java/org/intellij/sdk/language/SQLTestLexer.java~
-.DS_Storebuild/
-.gradle/
+.DS_Store
 .intellijPlatform/
