@@ -12,10 +12,13 @@ import java.util.Map;
 public class SQLTestColorSettingsPage implements ColorSettingsPage {
 
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Key", SQLTestSyntaxHighlighter.KEY),
-            new AttributesDescriptor("Separator", SQLTestSyntaxHighlighter.RESERVED),
-            new AttributesDescriptor("Value", SQLTestSyntaxHighlighter.VALUE),
-            new AttributesDescriptor("Bad Value", SQLTestSyntaxHighlighter.BAD_CHARACTER)
+            new AttributesDescriptor("Directive", SQLTestSyntaxHighlighter.RESERVED),
+            new AttributesDescriptor("Identifier", SQLTestSyntaxHighlighter.KEY),
+            new AttributesDescriptor("Value/Number", SQLTestSyntaxHighlighter.VALUE),
+            new AttributesDescriptor("Comment", SQLTestSyntaxHighlighter.COMMENT),
+            new AttributesDescriptor("SQL Keyword", SQLTestSyntaxHighlighter.SQL),
+            new AttributesDescriptor("Result Output", SQLTestSyntaxHighlighter.RESULT),
+            new AttributesDescriptor("Bad Character", SQLTestSyntaxHighlighter.BAD_CHARACTER)
     };
 
     @Nullable
@@ -33,7 +36,19 @@ public class SQLTestColorSettingsPage implements ColorSettingsPage {
     @NotNull
     @Override
     public String getDemoText() {
-        return " ";
+        return "# Test file example\n" +
+                "require tpch\n\n" +
+                "statement ok\n" +
+                "CREATE TABLE test (id INTEGER, name VARCHAR);\n\n" +
+                "query II\n" +
+                "SELECT id, name FROM test ORDER BY id;\n" +
+                "----\n" +
+                "1\tAlice\n" +
+                "2\tBob\n\n" +
+                "loop i 0 10\n" +
+                "statement ok\n" +
+                "INSERT INTO test VALUES (${i}, 'user');\n" +
+                "endloop\n";
     }
 
     @Nullable
@@ -57,7 +72,6 @@ public class SQLTestColorSettingsPage implements ColorSettingsPage {
     @NotNull
     @Override
     public String getDisplayName() {
-        return "Simple";
+        return "SQLTest";
     }
-
 }
