@@ -1913,6 +1913,26 @@ public class _TestLexer implements FlexLexer {
     this((java.io.Reader)null);
   }
 
+  public void reset(CharSequence buffer, int start, int end, int initialState) {
+    this.zzBuffer = new char[buffer.length()];
+    for (int i = 0; i < buffer.length(); i++) {
+      this.zzBuffer[i] = buffer.charAt(i);
+    }
+    this.zzCurrentPos = this.zzMarkedPos = this.zzStartRead = start;
+    this.zzAtEOF = false;
+    this.zzAtBOL = true;
+    this.zzEndRead = end;
+    yybegin(initialState);
+  }
+
+  public int getTokenStart() {
+    return zzStartRead;
+  }
+
+  public int getTokenEnd() {
+    return zzMarkedPos;
+  }
+
 
   /**
    * Creates a new scanner
@@ -2392,8 +2412,7 @@ public class _TestLexer implements FlexLexer {
               };
               zzMarkedPos = zzFPos;
             }
-            { // Double blank line also exits result section
-    yybegin(YYINITIAL);
+            { yybegin(YYINITIAL);
     return WHITE_SPACE;
             }
           // fall through

@@ -13,6 +13,26 @@ import static org.intellij.sdk.language.psi.TestTypes.*;
   public _TestLexer() {
     this((java.io.Reader)null);
   }
+
+  public void reset(CharSequence buffer, int start, int end, int initialState) {
+    this.zzBuffer = new char[buffer.length()];
+    for (int i = 0; i < buffer.length(); i++) {
+      this.zzBuffer[i] = buffer.charAt(i);
+    }
+    this.zzCurrentPos = this.zzMarkedPos = this.zzStartRead = start;
+    this.zzAtEOF = false;
+    this.zzAtBOL = true;
+    this.zzEndRead = end;
+    yybegin(initialState);
+  }
+
+  public int getTokenStart() {
+    return zzStartRead;
+  }
+
+  public int getTokenEnd() {
+    return zzMarkedPos;
+  }
 %}
 
 %public
@@ -36,7 +56,6 @@ QUERY_RETURN_TYPE=[TIR]+[ \t\n\x0B\f\r]
 QUERY_LABEL=label.+[ \t\n\x0B\f\r]
 SQL=(ADD|ALTER|AND|ANY|AS|ASC|BACKUP|BETWEEN|CASE|CHECK|CREATE|REPLACE|DELETE|DESC|COLUMN|CONSTRAINT|DROP|DATABASE|DEFAULT|EXEC|EXISTS|FOREIGN|FROM|FULL|GROUP|HAVING|IN|INDEX|INNER|INSERT|IS|LEFT|LIKE|LIMIT|NOT|OR|ORDER|BY|OUTER|PRIMARY|KEY|PROCEDURE|RIGHT|JOIN|ROWNUM|SELECT|DISTINCT|INTO|SET|TOP|TRUNCATE|TABLE|UNION|ALL|UNIQUE|UPDATE|VALUES|VIEW|WHERE|WITH|RECURSIVE|COPY|EXPLAIN|CALL|ATTACH|DETACH|EXPORT|IMPORT|PIVOT|UNPIVOT|DESCRIBE|SHOW|SUMMARIZE|RETURNING|QUALIFY|WINDOW|OVER|PARTITION|ROWS|RANGE|UNBOUNDED|PRECEDING|FOLLOWING|CURRENT|ROW|LATERAL|CROSS|NATURAL|USING|ON|WHEN|THEN|ELSE|END|CAST|TRY_CAST|NULL|TRUE|FALSE|IF|EXCEPT|INTERSECT|TYPE|ENUM|STRUCT|MAP|LIST|ARRAY|FUNCTION|MACRO|TEMPORARY|TEMP|SEQUENCE|SCHEMA|VACUUM|ANALYZE|RESET|GLOB|ILIKE|SIMILAR|TO|COLLATE|REFERENCES|GENERATED|ALWAYS|STORED|VIRTUAL|OFFSET|FETCH|ONLY|FILTER|FIRST|LAST|ESCAPE|DO|NOTHING|CONFLICT|IGNORE|ABORT|EXCLUDE|RESPECT|NULLS|NEXT|CASCADE|RESTRICT|GRANT|REVOKE|FORCE|AUTOINCREMENT)+[ \t\n\x0B\f\r]
 
-// In RESULT_SECTION, a blank line followed by a directive keyword returns to YYINITIAL
 RESULT_LINE=[^\r\n]+
 
 %%
@@ -80,13 +99,11 @@ RESULT_LINE=[^\r\n]+
 }
 
 <RESULT_SECTION> {
-  // Blank line signals potential end of results — peek for directive keywords
   {EOL} / [ \t]*(("statement"|"query"|"load"|"loop"|"endloop"|"restart"|"begin"|"halt"|"require"|"mode"|"foreach"|"endforeach"|"concurrentloop"|"concurrentforeach"|"skipif"|"onlyif"|"#")[ \t\n\x0B\f\r])  {
     yybegin(YYINITIAL);
     return WHITE_SPACE;
   }
   {EOL} / [ \t]*{EOL}  {
-    // Double blank line also exits result section
     yybegin(YYINITIAL);
     return WHITE_SPACE;
   }
