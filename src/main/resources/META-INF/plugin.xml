@@ -15,6 +15,7 @@
             <li>Structure view — navigate between tests, loops, requires in the sidebar</li>
             <li>Gutter icons — green check (statement ok), red X (statement error), play (query)</li>
             <li>Brace matching for loop/endloop and foreach/endforeach</li>
+            <li>Test counter in status bar (🦆 X stmt, Y query)</li>
             <li>Supports .test, .test_slow, .testslow, .benchmark, and .slt files</li>
         </ul>
     ]]></description>
@@ -26,6 +27,7 @@
             <li>Code folding for statement/query blocks, loops, and foreach blocks</li>
             <li>Gutter icons: green check (ok), red X (error), play button (query)</li>
             <li>Brace matching for loop/endloop and foreach/endforeach pairs</li>
+            <li>Status bar widget: shows test count for open file</li>
             <li>Context-aware highlighting: directives, SQL keywords, dimmed result output</li>
             <li>New directives: require, require-env, mode, halt, skipif, onlyif, foreach, etc.</li>
         </ul>
@@ -67,5 +69,8 @@
 
         <lang.braceMatcher language="Test"
                            implementationClass="org.intellij.sdk.language.SQLTestBraceMatcher"/>
+
+        <statusBarWidgetFactory implementation="org.intellij.sdk.language.SQLTestStatusBarWidgetFactory"
+                                id="SQLTestCounter"/>
     </extensions>
 </idea-plugin>
