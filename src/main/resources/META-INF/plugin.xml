@@ -11,6 +11,7 @@
         <ul>
             <li>Syntax highlighting for SQL keywords, directives, comments, strings, and numbers</li>
             <li>Proper result section handling (no highlighting bleed from query results)</li>
+            <li>Code folding for statement/query blocks, loops, and result sections</li>
             <li>Supports .test, .test_slow, .testslow, .benchmark, and .slt files</li>
         </ul>
     ]]></description>
@@ -21,6 +22,8 @@
             <li>Fix: apostrophe in query results no longer breaks syntax highlighting (#10)</li>
             <li>Added RESULT_SECTION lexer state for proper result section handling</li>
             <li>Expanded SQL keyword list with modern DuckDB keywords</li>
+            <li>Code folding for statement/query blocks, loops, and foreach blocks</li>
+            <li>New directive keywords: require, mode, halt, skipif, onlyif, foreach, etc.</li>
         </ul>
     ]]></change-notes>
 
@@ -41,5 +44,8 @@
 
         <lang.commenter language="Test"
                         implementationClass="org.intellij.sdk.language.SQLTestCommenter"/>
+
+        <lang.foldingBuilder language="Test"
+                             implementationClass="org.intellij.sdk.language.SQLTestFoldingBuilder"/>
     </extensions>
 </idea-plugin>
