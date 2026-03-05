@@ -1,51 +1,45 @@
 <idea-plugin>
     <id>pholanda.github.io</id>
     <name>SQLTest</name>
-    <version>1.1.1</version>
-    <vendor email="holanda@cwi.nl" url="pdet.github.io">CWI</vendor>
+    <version>1.1.2</version>
+    <vendor email="holanda@cwi.nl" url="https://pdet.github.io">Pedro Holanda</vendor>
 
-    <description><![CDATA[This is an extension for Jetbrains that provides language support for sqllogictest, a text-driven testing framework for SQL databases.]]></description>
+    <description><![CDATA[
+        Language support for <b>sqllogictest</b> (.test) files, the text-driven testing framework used by
+        <a href="https://duckdb.org">DuckDB</a> and other SQL databases.
 
+        <ul>
+            <li>Syntax highlighting for SQL keywords, directives, comments, strings, and numbers</li>
+            <li>Proper result section handling (no highlighting bleed from query results)</li>
+            <li>Supports .test, .test_slow, .testslow, .benchmark, and .slt files</li>
+        </ul>
+    ]]></description>
 
-    <!-- Description of changes in the latest version of the plugin.
-         Displayed in the "Plugins" settings dialog and the plugin repository Web interface.
-         Simple HTML elements can be included between <![CDATA[  ]]> tags.  -->
-    <change-notes>Initial release of the  SQLTest syntax highlight plugin for JetBrains.</change-notes>
+    <change-notes><![CDATA[
+        <b>1.1.2</b>
+        <ul>
+            <li>Fix: apostrophe in query results no longer breaks syntax highlighting (#10)</li>
+            <li>Added RESULT_SECTION lexer state for proper result section handling</li>
+            <li>Expanded SQL keyword list with modern DuckDB keywords</li>
+        </ul>
+    ]]></change-notes>
 
-    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
     <depends>com.intellij.modules.lang</depends>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Test File" implementationClass="org.intellij.sdk.language.SQLTestFileType"
-                  fieldName="INSTANCE" language="Test" extensions="test_slow;test;testslow"/>
-    </extensions>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <lang.parserDefinition language="Test"
-                               implementationClass="org.intellij.sdk.language.SQLTestParserDefinition"/>
-    </extensions>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <lang.syntaxHighlighterFactory language="Test"
-                                       implementationClass="org.intellij.sdk.language.SQLTestSyntaxHighlighterFactory"/>
-    </extensions>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <lang.commenter language="Test" implementationClass="org.intellij.sdk.language.SQLTestCommenter"/>
-    </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Test File"
                   implementationClass="org.intellij.sdk.language.SQLTestFileType"
-                  language="SQLTestLanguage"
-                  fileTypeName="SQLTestFileType"
-                  description="Test language file"
-                  icon="SQLTestIcons.FILE"
-                  extensions="test;test_slow;benchmark;slt"/>
-    </extensions>
+                  fieldName="INSTANCE"
+                  language="Test"
+                  extensions="test;test_slow;testslow;benchmark;slt"/>
 
-    <actions>
-        <!-- Add your actions here -->
-    </actions>
+        <lang.parserDefinition language="Test"
+                               implementationClass="org.intellij.sdk.language.SQLTestParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory language="Test"
+                                       implementationClass="org.intellij.sdk.language.SQLTestSyntaxHighlighterFactory"/>
+
+        <lang.commenter language="Test"
+                        implementationClass="org.intellij.sdk.language.SQLTestCommenter"/>
+    </extensions>
 </idea-plugin>
