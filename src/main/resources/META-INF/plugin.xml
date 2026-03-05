@@ -13,6 +13,7 @@
             <li>Proper result section handling (no highlighting bleed from query results)</li>
             <li>Code folding for statement/query blocks, loops, and result sections</li>
             <li>Structure view — navigate between tests, loops, requires in the sidebar</li>
+            <li>Gutter icons — green check (statement ok), red X (statement error), play (query)</li>
             <li>Supports .test, .test_slow, .testslow, .benchmark, and .slt files</li>
         </ul>
     ]]></description>
@@ -23,6 +24,7 @@
             <li>Structure view: navigate statements, queries, loops, requires from sidebar</li>
             <li>Query/statement entries show SQL preview (first line of SQL)</li>
             <li>Code folding for statement/query blocks, loops, and foreach blocks</li>
+            <li>Gutter icons: green check (ok), red X (error), play button (query)</li>
             <li>Context-aware highlighting: directives, SQL keywords, dimmed result output</li>
             <li>New directives: require, require-env, mode, halt, skipif, onlyif, foreach, etc.</li>
         </ul>
@@ -58,5 +60,8 @@
 
         <lang.psiStructureViewFactory language="Test"
                                       implementationClass="org.intellij.sdk.language.SQLTestStructureViewFactory"/>
+
+        <codeInsight.lineMarkerProvider language="Test"
+                                        implementationClass="org.intellij.sdk.language.SQLTestLineMarkerProvider"/>
     </extensions>
 </idea-plugin>
