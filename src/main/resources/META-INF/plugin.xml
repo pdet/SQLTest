@@ -16,6 +16,7 @@
             <li>Gutter icons — green check (statement ok), red X (statement error), play (query)</li>
             <li>Brace matching for loop/endloop and foreach/endforeach</li>
             <li>Error annotations — mismatched loops, missing results, bad qualifiers</li>
+            <li>Go to Next/Previous Test (Ctrl+Shift+Down/Up)</li>
             <li>Test counter in status bar (🦆 X stmt, Y query)</li>
             <li>Supports .test, .test_slow, .testslow, .benchmark, and .slt files</li>
         </ul>
@@ -29,8 +30,10 @@
             <li>Gutter icons: green check (ok), red X (error), play button (query)</li>
             <li>Brace matching for loop/endloop and foreach/endforeach pairs</li>
             <li>Error annotations: mismatched loop/endloop, missing ----, bad statement qualifiers</li>
+            <li>Go to Next/Previous Test actions (Ctrl+Shift+Down/Up)</li>
             <li>Status bar widget: shows test count for open file</li>
             <li>Context-aware highlighting: directives, SQL keywords, dimmed result output</li>
+            <li>25 unit tests for lexer token streams</li>
             <li>New directives: require, require-env, mode, halt, skipif, onlyif, foreach, etc.</li>
         </ul>
         <b>1.1.2</b>
@@ -78,4 +81,26 @@
         <annotator language="Test"
                    implementationClass="org.intellij.sdk.language.SQLTestAnnotator"/>
     </extensions>
+
+    <actions>
+        <group id="SQLTest.NavigationGroup" text="SQLTest" popup="true">
+            <add-to-group group-id="GoToMenu" anchor="last"/>
+        </group>
+
+        <action id="SQLTest.GoToNextTest"
+                class="org.intellij.sdk.language.SQLTestGoToNextAction"
+                text="Go to Next Test"
+                description="Navigate to the next statement/query block">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift DOWN"/>
+            <add-to-group group-id="SQLTest.NavigationGroup"/>
+        </action>
+
+        <action id="SQLTest.GoToPreviousTest"
+                class="org.intellij.sdk.language.SQLTestGoToPreviousAction"
+                text="Go to Previous Test"
+                description="Navigate to the previous statement/query block">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift UP"/>
+            <add-to-group group-id="SQLTest.NavigationGroup"/>
+        </action>
+    </actions>
 </idea-plugin>
