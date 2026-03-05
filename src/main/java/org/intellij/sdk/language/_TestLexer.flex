@@ -56,7 +56,7 @@ QUERY_RETURN_TYPE=[TIR]+[ \t\n\x0B\f\r]
 QUERY_LABEL=label.+[ \t\n\x0B\f\r]
 SQL=(ADD|ALTER|AND|ANY|AS|ASC|BACKUP|BETWEEN|CASE|CHECK|CREATE|REPLACE|DELETE|DESC|COLUMN|CONSTRAINT|DROP|DATABASE|DEFAULT|EXEC|EXISTS|FOREIGN|FROM|FULL|GROUP|HAVING|IN|INDEX|INNER|INSERT|IS|LEFT|LIKE|LIMIT|NOT|OR|ORDER|BY|OUTER|PRIMARY|KEY|PROCEDURE|RIGHT|JOIN|ROWNUM|SELECT|DISTINCT|INTO|SET|TOP|TRUNCATE|TABLE|UNION|ALL|UNIQUE|UPDATE|VALUES|VIEW|WHERE|WITH|RECURSIVE|COPY|EXPLAIN|CALL|ATTACH|DETACH|EXPORT|IMPORT|PIVOT|UNPIVOT|DESCRIBE|SHOW|SUMMARIZE|RETURNING|QUALIFY|WINDOW|OVER|PARTITION|ROWS|RANGE|UNBOUNDED|PRECEDING|FOLLOWING|CURRENT|ROW|LATERAL|CROSS|NATURAL|USING|ON|WHEN|THEN|ELSE|END|CAST|TRY_CAST|NULL|TRUE|FALSE|IF|EXCEPT|INTERSECT|TYPE|ENUM|STRUCT|MAP|LIST|ARRAY|FUNCTION|MACRO|TEMPORARY|TEMP|SEQUENCE|SCHEMA|VACUUM|ANALYZE|RESET|GLOB|ILIKE|SIMILAR|TO|COLLATE|REFERENCES|GENERATED|ALWAYS|STORED|VIRTUAL|OFFSET|FETCH|ONLY|FILTER|FIRST|LAST|ESCAPE|DO|NOTHING|CONFLICT|IGNORE|ABORT|EXCLUDE|RESPECT|NULLS|NEXT|CASCADE|RESTRICT|GRANT|REVOKE|FORCE|AUTOINCREMENT)+[ \t\n\x0B\f\r]
 
-RESULT_LINE=[^\r\n]+
+RESULT_TEXT=[^\r\n]+
 
 %%
 
@@ -78,9 +78,19 @@ RESULT_LINE=[^\r\n]+
   ">"                      { return HIGHER; }
   "loop"                   { return LOOP; }
   "endloop"                { return ENDLOOP; }
+  "foreach"                { return FOREACH; }
+  "endforeach"             { return ENDFOREACH; }
+  "concurrentloop"         { return CONCURRENTLOOP; }
+  "concurrentforeach"      { return CONCURRENTFOREACH; }
   "statement"              { return STATEMENT; }
   "query"                  { return QUERY; }
   "load"                   { return LOAD; }
+  "require-env"            { return REQUIRE_ENV; }
+  "require"                { return REQUIRE; }
+  "mode"                   { return MODE; }
+  "halt"                   { return HALT; }
+  "skipif"                 { return SKIPIF; }
+  "onlyif"                 { return ONLYIF; }
   "PRAGMA"                 { return PRAGMA; }
   "restart"                { return RESTART; }
   "begin"                  { return BEGIN; }
@@ -99,7 +109,7 @@ RESULT_LINE=[^\r\n]+
 }
 
 <RESULT_SECTION> {
-  {EOL} / [ \t]*(("statement"|"query"|"load"|"loop"|"endloop"|"restart"|"begin"|"halt"|"require"|"mode"|"foreach"|"endforeach"|"concurrentloop"|"concurrentforeach"|"skipif"|"onlyif"|"#")[ \t\n\x0B\f\r])  {
+  {EOL} / [ \t]*(("statement"|"query"|"load"|"loop"|"endloop"|"foreach"|"endforeach"|"concurrentloop"|"concurrentforeach"|"restart"|"begin"|"halt"|"require"|"require-env"|"mode"|"skipif"|"onlyif"|"#")[ \t\n\x0B\f\r])  {
     yybegin(YYINITIAL);
     return WHITE_SPACE;
   }
@@ -107,7 +117,7 @@ RESULT_LINE=[^\r\n]+
     yybegin(YYINITIAL);
     return WHITE_SPACE;
   }
-  {RESULT_LINE}            { return ID; }
+  {RESULT_TEXT}            { return RESULT_LINE; }
   {EOL}                    { return WHITE_SPACE; }
 }
 

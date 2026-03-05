@@ -1,6 +1,5 @@
 package org.intellij.sdk.language;
 
-import com.intellij.lang.TokenWrapper;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
@@ -28,16 +27,18 @@ public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
     public static final TextAttributesKey QUERY =
             createTextAttributesKey("TEST_Query", HighlighterColors.TEXT);
     public static final TextAttributesKey SQL =
-            createTextAttributesKey("TEST_SQL",  DefaultLanguageHighlighterColors.CONSTANT);
+            createTextAttributesKey("TEST_SQL", DefaultLanguageHighlighterColors.CONSTANT);
+    public static final TextAttributesKey RESULT =
+            createTextAttributesKey("TEST_RESULT", DefaultLanguageHighlighterColors.DOC_COMMENT);
 
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
     private static final TextAttributesKey[] RESERVED_KEYS = new TextAttributesKey[]{RESERVED};
     private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
     private static final TextAttributesKey[] QUERY_KEYS = new TextAttributesKey[]{QUERY};
-
     private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
     private static final TextAttributesKey[] SQL_KEYS = new TextAttributesKey[]{SQL};
+    private static final TextAttributesKey[] RESULT_KEYS = new TextAttributesKey[]{RESULT};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
     @NotNull
@@ -49,26 +50,44 @@ public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public TextAttributesKey[] getTokenHighlights(IElementType tokenType) {
-        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.Q_RESULT) ||
-                tokenType.equals(TestTypes.RESTART)|| tokenType.equals(TestTypes.BEGIN)||
-                tokenType.equals(TestTypes.TRANSACTION) || tokenType.equals(TestTypes.ROLLBACK)||
-                tokenType.equals(TestTypes.PRAGMA) || tokenType.equals(TestTypes.LOAD) ||
-                tokenType.equals(TestTypes.ENDLOOP)|| tokenType.equals(TestTypes.STATEMENT) ||
-                tokenType.equals(TestTypes.QUERY) || tokenType.equals(TestTypes.PHYSICAL_PLAN)) {
+        // Directives
+        if (tokenType.equals(TestTypes.LOOP) || tokenType.equals(TestTypes.ENDLOOP) ||
+                tokenType.equals(TestTypes.FOREACH) || tokenType.equals(TestTypes.ENDFOREACH) ||
+                tokenType.equals(TestTypes.CONCURRENTLOOP) || tokenType.equals(TestTypes.CONCURRENTFOREACH) ||
+                tokenType.equals(TestTypes.STATEMENT) || tokenType.equals(TestTypes.QUERY) ||
+                tokenType.equals(TestTypes.LOAD) || tokenType.equals(TestTypes.RESTART) ||
+                tokenType.equals(TestTypes.BEGIN) || tokenType.equals(TestTypes.TRANSACTION) ||
+                tokenType.equals(TestTypes.ROLLBACK) || tokenType.equals(TestTypes.PRAGMA) ||
+                tokenType.equals(TestTypes.REQUIRE) || tokenType.equals(TestTypes.REQUIRE_ENV) ||
+                tokenType.equals(TestTypes.MODE) || tokenType.equals(TestTypes.HALT) ||
+                tokenType.equals(TestTypes.SKIPIF) || tokenType.equals(TestTypes.ONLYIF) ||
+                tokenType.equals(TestTypes.Q_RESULT) || tokenType.equals(TestTypes.PHYSICAL_PLAN)) {
             return RESERVED_KEYS;
-        } else if (tokenType.equals(TestTypes.ID)|| tokenType.equals(TestTypes.QUERY_RETURN_TYPE)) {
-            return KEY_KEYS;
-        } else if (tokenType.equals(TestTypes.NUMBER) || tokenType.equals(TestTypes.QUERY_LABEL)) {
-            return VALUE_KEYS;
-        } else if (tokenType.equals(TestTypes.COMMENT)) {
-            return COMMENT_KEYS;
-        } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
-            return BAD_CHAR_KEYS;
-        } else if (tokenType.equals(TestTypes.SQL)){
-            return SQL_KEYS;
-        } else {
-            return EMPTY_KEYS;
         }
+        // Identifiers and return types
+        if (tokenType.equals(TestTypes.ID) || tokenType.equals(TestTypes.QUERY_RETURN_TYPE)) {
+            return KEY_KEYS;
+        }
+        // Numbers and labels
+        if (tokenType.equals(TestTypes.NUMBER) || tokenType.equals(TestTypes.QUERY_LABEL)) {
+            return VALUE_KEYS;
+        }
+        // Comments
+        if (tokenType.equals(TestTypes.COMMENT)) {
+            return COMMENT_KEYS;
+        }
+        // Result lines (dimmed)
+        if (tokenType.equals(TestTypes.RESULT_LINE)) {
+            return RESULT_KEYS;
+        }
+        // SQL keywords
+        if (tokenType.equals(TestTypes.SQL)) {
+            return SQL_KEYS;
+        }
+        // Bad characters
+        if (tokenType.equals(TokenType.BAD_CHARACTER)) {
+            return BAD_CHAR_KEYS;
+        }
+        return EMPTY_KEYS;
     }
-
 }
