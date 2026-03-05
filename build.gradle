@@ -3,9 +3,8 @@ plugins {
 }
 
 group 'pdet.github.io'
-version '1.1.2'
+version '1.2.0'
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
 repositories {
   mavenCentral()
 
@@ -20,19 +19,30 @@ java {
 }
 
 intellijPlatform {
-    buildSearchableOptions.set(false)  // Disable searchable options
+    buildSearchableOptions.set(false)
 }
 
-//https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-dependencies-extension.html
 dependencies {
   intellijPlatform {
     clion("2025.1")
     instrumentationTools()
   }
+  testImplementation 'junit:junit:4.13.2'
 }
 
-// Check if JDK is correct version for each release
-// e.g., class file has wrong version 61.0, should be 55.0
-// https://www.baeldung.com/java-find-class-version
-// https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
-sourceSets.main.java.srcDirs 'src/main/gen'
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/gen'
+        }
+    }
+    test {
+        java {
+            srcDirs 'src/test/java'
+        }
+    }
+}
+
+test {
+    useJUnit()
+}
