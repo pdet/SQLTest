@@ -3,6 +3,7 @@
 package org.intellij.sdk.language;
 
 import com.intellij.lang.ASTNode;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
 import com.intellij.lexer.Lexer;
@@ -77,7 +78,7 @@ public class SQLTestParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public PsiElement createElement(ASTNode node) {
-        return null;
+        return new ASTWrapperPsiElement(node);
     }
 
 }
