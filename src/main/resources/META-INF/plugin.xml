@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>pholanda.github.io</id>
     <name>SQLTest</name>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <vendor email="holanda@cwi.nl" url="https://pdet.github.io">Pedro Holanda</vendor>
 
     <description><![CDATA[
