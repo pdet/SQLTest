@@ -1,0 +1,17 @@
+statement ok
+CREATE TABLE t1 (id INTEGER, name VARCHAR)
+
+statement ok
+INSERT INTO t1 VALUES (1, 'hello')
+
+query II
+SELECT * FROM t1
+----
+1	hello
+
+loop 3
+
+statement ok
+INSERT INTO t1 VALUES (42, 'world')
+
+endloop

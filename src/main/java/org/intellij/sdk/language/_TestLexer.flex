@@ -15,16 +15,22 @@ import static org.intellij.sdk.language.psi.TestTypes.*;
   }
 
   public void reset(CharSequence buffer, int start, int end, int initialState) {
-    this.zzBuffer = new char[buffer.length()];
-    for (int i = 0; i < buffer.length(); i++) {
-      this.zzBuffer[i] = buffer.charAt(i);
+    char[] buf = new char[end];
+    for (int i = 0; i < end; i++) {
+      buf[i] = buffer.charAt(i);
     }
+    this.zzBuffer = buf;
     this.zzCurrentPos = this.zzMarkedPos = this.zzStartRead = start;
     this.zzAtEOF = false;
     this.zzAtBOL = true;
     this.zzEndRead = end;
-    this.zzReader = new java.io.StringReader("");
+    this.zzReader = java.io.Reader.nullReader();
     yybegin(initialState);
+  }
+
+  /** Pre-loaded buffer — no refilling needed. Signal EOF when buffer is consumed. */
+  private boolean zzRefill() {
+    return true;
   }
 
   public int getTokenStart() {

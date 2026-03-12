@@ -2006,15 +2006,16 @@ public class _TestLexer implements FlexLexer {
   }
 
   public void reset(CharSequence buffer, int start, int end, int initialState) {
-    this.zzBuffer = new char[buffer.length()];
-    for (int i = 0; i < buffer.length(); i++) {
-      this.zzBuffer[i] = buffer.charAt(i);
+    char[] buf = new char[end];
+    for (int i = 0; i < end; i++) {
+      buf[i] = buffer.charAt(i);
     }
+    this.zzBuffer = buf;
     this.zzCurrentPos = this.zzMarkedPos = this.zzStartRead = start;
     this.zzAtEOF = false;
     this.zzAtBOL = true;
     this.zzEndRead = end;
-    this.zzReader = new java.io.StringReader("");
+    this.zzReader = java.io.Reader.nullReader();
     yybegin(initialState);
   }
 
@@ -2061,67 +2062,8 @@ public class _TestLexer implements FlexLexer {
    * @return {@code false} iff there was new input.
    * @exception java.io.IOException  if any I/O-Error occurs
    */
-  private boolean zzRefill() throws java.io.IOException {
-
-    /* first: make room (if you can) */
-    if (zzStartRead > 0) {
-      zzEndRead += zzFinalHighSurrogate;
-      zzFinalHighSurrogate = 0;
-      System.arraycopy(zzBuffer, zzStartRead,
-                       zzBuffer, 0,
-                       zzEndRead - zzStartRead);
-
-      /* translate stored positions */
-      zzEndRead -= zzStartRead;
-      zzCurrentPos -= zzStartRead;
-      zzMarkedPos -= zzStartRead;
-      zzStartRead = 0;
-    }
-
-    /* is the buffer big enough? */
-    if (zzCurrentPos >= zzBuffer.length - zzFinalHighSurrogate && zzCanGrow()) {
-      /* if not, and it can grow: blow it up */
-      char newBuffer[] = new char[Math.min(zzBuffer.length * 2, zzMaxBufferLen())];
-      System.arraycopy(zzBuffer, 0, newBuffer, 0, zzBuffer.length);
-      zzBuffer = newBuffer;
-      zzEndRead += zzFinalHighSurrogate;
-      zzFinalHighSurrogate = 0;
-    }
-
-    /* fill the buffer with new input */
-    int requested = zzBuffer.length - zzEndRead;
-    int numRead = zzReader.read(zzBuffer, zzEndRead, requested);
-
-    /* not supposed to occur according to specification of java.io.Reader */
-    if (numRead == 0) {
-      if (requested == 0) {
-        throw new java.io.EOFException("Scan buffer limit reached ["+zzBuffer.length+"]");
-      }
-      else {
-        throw new java.io.IOException(
-            "Reader returned 0 characters. See JFlex examples/zero-reader for a workaround.");
-      }
-    }
-    if (numRead > 0) {
-      zzEndRead += numRead;
-      if (Character.isHighSurrogate(zzBuffer[zzEndRead - 1])) {
-        if (numRead == requested) { // We requested too few chars to encode a full Unicode character
-          --zzEndRead;
-          zzFinalHighSurrogate = 1;
-        } else {                    // There is room in the buffer for at least one more char
-          int c = zzReader.read();  // Expecting to read a paired low surrogate char
-          if (c == -1) {
-            return true;
-          } else {
-            zzBuffer[zzEndRead++] = (char)c;
-          }
-        }
-      }
-      /* potentially more input available */
-      return false;
-    }
-
-    /* numRead < 0 ==> end of stream */
+  private boolean zzRefill() {
+    // Pre-loaded buffer — signal EOF when consumed
     return true;
   }
 

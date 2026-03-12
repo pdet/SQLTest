@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'pdet.github.io'
-version '1.2.1'
+version '1.2.2'
 
 repositories {
   mavenCentral()
@@ -26,6 +26,7 @@ dependencies {
   intellijPlatform {
     clion("2025.1")
     instrumentationTools()
+    testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform.INSTANCE)
   }
   testImplementation 'junit:junit:4.13.2'
 }
@@ -45,4 +46,7 @@ sourceSets {
 
 test {
     useJUnit()
+    jvmArgs '-Djava.awt.headless=true'
+    environment 'LD_LIBRARY_PATH', '/home/pdet/micromamba/envs/build/lib'
+    environment 'FONTCONFIG_PATH', '/home/pdet/micromamba/envs/build/etc/fonts'
 }
