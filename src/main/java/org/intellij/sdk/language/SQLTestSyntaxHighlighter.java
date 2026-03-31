@@ -56,12 +56,25 @@ public class SQLTestSyntaxHighlighter extends SyntaxHighlighterBase {
                 tokenType.equals(TestTypes.CONCURRENTLOOP) || tokenType.equals(TestTypes.CONCURRENTFOREACH) ||
                 tokenType.equals(TestTypes.STATEMENT) || tokenType.equals(TestTypes.QUERY) ||
                 tokenType.equals(TestTypes.LOAD) || tokenType.equals(TestTypes.RESTART) ||
+                tokenType.equals(TestTypes.RECONNECT) ||
                 tokenType.equals(TestTypes.BEGIN) || tokenType.equals(TestTypes.TRANSACTION) ||
                 tokenType.equals(TestTypes.ROLLBACK) || tokenType.equals(TestTypes.PRAGMA) ||
                 tokenType.equals(TestTypes.REQUIRE) || tokenType.equals(TestTypes.REQUIRE_ENV) ||
+                tokenType.equals(TestTypes.REQUIRE_REINIT) ||
                 tokenType.equals(TestTypes.MODE) || tokenType.equals(TestTypes.HALT) ||
                 tokenType.equals(TestTypes.SKIPIF) || tokenType.equals(TestTypes.ONLYIF) ||
-                tokenType.equals(TestTypes.Q_RESULT) || tokenType.equals(TestTypes.PHYSICAL_PLAN)) {
+                tokenType.equals(TestTypes.Q_RESULT) || tokenType.equals(TestTypes.PHYSICAL_PLAN) ||
+                tokenType.equals(TestTypes.SLEEP) || tokenType.equals(TestTypes.HASH_THRESHOLD) ||
+                tokenType.equals(TestTypes.UNZIP) || tokenType.equals(TestTypes.TEST_ENV) ||
+                tokenType.equals(TestTypes.TAGS) || tokenType.equals(TestTypes.CONTINUE) ||
+                tokenType.equals(TestTypes.TEMPLATE) || tokenType.equals(TestTypes.CACHE) ||
+                tokenType.equals(TestTypes.CACHE_FILE) || tokenType.equals(TestTypes.CLEANUP) ||
+                tokenType.equals(TestTypes.INIT) || tokenType.equals(TestTypes.RELOAD) ||
+                tokenType.equals(TestTypes.RESULTMODE) || tokenType.equals(TestTypes.RESULT_QUERY) ||
+                tokenType.equals(TestTypes.ASSERT) || tokenType.equals(TestTypes.RUN) ||
+                tokenType.equals(TestTypes.INCLUDE) || tokenType.equals(TestTypes.ARGUMENT) ||
+                tokenType.equals(TestTypes.SUBGROUP) || tokenType.equals(TestTypes.STORAGE) ||
+                tokenType.equals(TestTypes.RETRY)) {
             return RESERVED_KEYS;
         }
         // Identifiers and return types

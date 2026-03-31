@@ -158,13 +158,27 @@ public class SQLTestFoldingBuilder extends FoldingBuilderEx {
 
     private boolean isDirective(String trimmed) {
         return trimmed.startsWith("statement ") || trimmed.startsWith("query ") ||
-                trimmed.startsWith("load ") || trimmed.startsWith("loop ") ||
+                trimmed.startsWith("load") || trimmed.startsWith("loop ") ||
                 trimmed.equals("endloop") || trimmed.startsWith("foreach ") ||
                 trimmed.equals("endforeach") || trimmed.startsWith("require ") ||
-                trimmed.startsWith("require-env ") || trimmed.startsWith("mode ") ||
+                trimmed.startsWith("require-env ") || trimmed.startsWith("require_reinit") ||
+                trimmed.startsWith("mode ") ||
                 trimmed.equals("halt") || trimmed.startsWith("skipif ") ||
                 trimmed.startsWith("onlyif ") || trimmed.equals("restart") ||
-                trimmed.startsWith("concurrentloop ") || trimmed.startsWith("concurrentforeach ");
+                trimmed.equals("reconnect") ||
+                trimmed.startsWith("concurrentloop ") || trimmed.startsWith("concurrentforeach ") ||
+                trimmed.startsWith("sleep ") || trimmed.startsWith("hash-threshold ") ||
+                trimmed.startsWith("unzip ") || trimmed.startsWith("test-env ") ||
+                trimmed.startsWith("tags ") || trimmed.equals("continue") ||
+                trimmed.startsWith("template ") || trimmed.startsWith("cache_file ") ||
+                trimmed.startsWith("cache ") || trimmed.startsWith("cleanup") ||
+                trimmed.startsWith("init") || trimmed.startsWith("reload") ||
+                trimmed.startsWith("resultmode ") || trimmed.startsWith("result_query ") ||
+                trimmed.startsWith("assert ") || trimmed.startsWith("run") ||
+                trimmed.startsWith("include ") || trimmed.startsWith("argument ") ||
+                trimmed.startsWith("subgroup ") || trimmed.startsWith("storage ") ||
+                trimmed.startsWith("retry ") || trimmed.startsWith("physical_plan") ||
+                trimmed.startsWith("set ") || trimmed.startsWith("#");
     }
 
     @Nullable

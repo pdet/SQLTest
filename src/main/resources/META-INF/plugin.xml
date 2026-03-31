@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>pholanda.github.io</id>
     <name>SQLTest</name>
-    <version>1.2.2</version>
+    <version>1.3.0</version>
     <vendor email="holanda@cwi.nl" url="https://pdet.github.io">Pedro Holanda</vendor>
 
     <description><![CDATA[
@@ -15,14 +15,28 @@
             <li>Structure view — navigate between tests, loops, requires in the sidebar</li>
             <li>Gutter icons — green check (statement ok), red X (statement error), play (query)</li>
             <li>Brace matching for loop/endloop and foreach/endforeach</li>
-            <li>Error annotations — mismatched loops, missing results, bad qualifiers</li>
+            <li>Error annotations — mismatched loops, missing results, bad qualifiers, column count mismatch</li>
+            <li>SQL formatter — uppercase keywords, break into multi-line clauses (quick-fix)</li>
+            <li>Quick fixes — fix column types, format SQL, remove duplicate requires</li>
             <li>Go to Next/Previous Test (Ctrl+Shift+Down/Up)</li>
-            <li>Test counter in status bar (🦆 X stmt, Y query)</li>
+            <li>Test counter in status bar</li>
             <li>Supports .test, .test_slow, .testslow, .benchmark, and .slt files</li>
         </ul>
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>1.3.0</b>
+        <ul>
+            <li>23 new directive keywords: reconnect, sleep, hash-threshold, unzip, test-env, tags, continue, template, cache, cache_file, cleanup, init, reload, resultmode, result_query, assert, run, include, argument, subgroup, storage, retry, require_reinit</li>
+            <li>SQL formatter with quick-fix: uppercases keywords, breaks into multi-line clauses, indents subqueries, column defs, CTEs</li>
+            <li>Error: query column count mismatch (with quick-fix to adjust type string)</li>
+            <li>Error: invalid query return type characters (with quick-fix)</li>
+            <li>Error: empty query type specification, missing loop/foreach parameters</li>
+            <li>Warning: duplicate require (with quick-fix to remove), invalid mode, invalid sleep unit, empty SQL body, statement ok with result section, empty loop range, non-numeric hash-threshold</li>
+            <li>Statement qualifiers: debug and debug_skip now recognized</li>
+            <li>Full .benchmark file support: template, cache, run, init, cleanup, reload, resultmode, assert, argument, subgroup, storage, retry, require_reinit, result_query, cache_file, include</li>
+            <li>275 tests (up from 198)</li>
+        </ul>
         <b>1.2.0</b>
         <ul>
             <li>Structure view: navigate statements, queries, loops, requires from sidebar</li>

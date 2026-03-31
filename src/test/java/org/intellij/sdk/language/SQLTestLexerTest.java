@@ -299,6 +299,115 @@ public class SQLTestLexerTest {
         Assert.assertEquals(TestTypes.QUERY_RETURN_TYPE, tokens.get(0).type);
     }
 
+    // ---- New directive tokens ----
+
+    @Test public void testSleep() throws IOException {
+        Assert.assertEquals(TestTypes.SLEEP, tokenizeNoWS("sleep 1 second").get(0).type);
+    }
+    @Test public void testHashThreshold() throws IOException {
+        Assert.assertEquals(TestTypes.HASH_THRESHOLD, tokenizeNoWS("hash-threshold 100").get(0).type);
+    }
+    @Test public void testUnzip() throws IOException {
+        Assert.assertEquals(TestTypes.UNZIP, tokenizeNoWS("unzip file.gz").get(0).type);
+    }
+    @Test public void testTestEnv() throws IOException {
+        Assert.assertEquals(TestTypes.TEST_ENV, tokenizeNoWS("test-env VAR val").get(0).type);
+    }
+    @Test public void testTags() throws IOException {
+        Assert.assertEquals(TestTypes.TAGS, tokenizeNoWS("tags nightly").get(0).type);
+    }
+    @Test public void testContinue() throws IOException {
+        Assert.assertEquals(TestTypes.CONTINUE, tokenizeNoWS("continue").get(0).type);
+    }
+    @Test public void testReconnect() throws IOException {
+        Assert.assertEquals(TestTypes.RECONNECT, tokenizeNoWS("reconnect").get(0).type);
+    }
+    @Test public void testTemplate() throws IOException {
+        Assert.assertEquals(TestTypes.TEMPLATE, tokenizeNoWS("template bench.in").get(0).type);
+    }
+    @Test public void testCache() throws IOException {
+        Assert.assertEquals(TestTypes.CACHE, tokenizeNoWS("cache db.duckdb").get(0).type);
+    }
+    @Test public void testCacheFile() throws IOException {
+        Assert.assertEquals(TestTypes.CACHE_FILE, tokenizeNoWS("cache_file data.csv").get(0).type);
+    }
+    @Test public void testCleanup() throws IOException {
+        Assert.assertEquals(TestTypes.CLEANUP, tokenizeNoWS("cleanup").get(0).type);
+    }
+    @Test public void testInit() throws IOException {
+        Assert.assertEquals(TestTypes.INIT, tokenizeNoWS("init").get(0).type);
+    }
+    @Test public void testReload() throws IOException {
+        Assert.assertEquals(TestTypes.RELOAD, tokenizeNoWS("reload").get(0).type);
+    }
+    @Test public void testResultmode() throws IOException {
+        Assert.assertEquals(TestTypes.RESULTMODE, tokenizeNoWS("resultmode streaming").get(0).type);
+    }
+    @Test public void testResultQuery() throws IOException {
+        Assert.assertEquals(TestTypes.RESULT_QUERY, tokenizeNoWS("result_query 3").get(0).type);
+    }
+    @Test public void testAssert() throws IOException {
+        Assert.assertEquals(TestTypes.ASSERT, tokenizeNoWS("assert I").get(0).type);
+    }
+    @Test public void testRun() throws IOException {
+        Assert.assertEquals(TestTypes.RUN, tokenizeNoWS("run queries/q01.sql").get(0).type);
+    }
+    @Test public void testInclude() throws IOException {
+        Assert.assertEquals(TestTypes.INCLUDE, tokenizeNoWS("include other.test").get(0).type);
+    }
+    @Test public void testArgument() throws IOException {
+        Assert.assertEquals(TestTypes.ARGUMENT, tokenizeNoWS("argument sf 1").get(0).type);
+    }
+    @Test public void testSubgroup() throws IOException {
+        Assert.assertEquals(TestTypes.SUBGROUP, tokenizeNoWS("subgroup sf1").get(0).type);
+    }
+    @Test public void testStorage() throws IOException {
+        Assert.assertEquals(TestTypes.STORAGE, tokenizeNoWS("storage persistent").get(0).type);
+    }
+    @Test public void testRetry() throws IOException {
+        Assert.assertEquals(TestTypes.RETRY, tokenizeNoWS("retry load 3").get(0).type);
+    }
+    @Test public void testRequireReinit() throws IOException {
+        Assert.assertEquals(TestTypes.REQUIRE_REINIT, tokenizeNoWS("require_reinit").get(0).type);
+    }
+
+    // ---- New tokens: case insensitivity ----
+
+    @Test public void testSleepCaseInsensitive() throws IOException {
+        Assert.assertEquals(TestTypes.SLEEP, tokenizeNoWS("SLEEP 1 second").get(0).type);
+    }
+    @Test public void testTemplateCaseInsensitive() throws IOException {
+        Assert.assertEquals(TestTypes.TEMPLATE, tokenizeNoWS("TEMPLATE bench.in").get(0).type);
+    }
+
+    // ---- Result section content should be RESULT_LINE tokens ----
+
+    @Test public void testResultSectionContent() throws IOException {
+        // Result values that look like keywords should still be RESULT_LINE
+        String input = "query I\nSELECT 1\n----\nhello world\n42\n\n";
+        List<TokenInfo> tokens = tokenize(input);
+        boolean foundResultLine = false;
+        boolean afterSeparator = false;
+        for (TokenInfo t : tokens) {
+            if (t.type == TestTypes.Q_RESULT) afterSeparator = true;
+            if (afterSeparator && t.type == TestTypes.RESULT_LINE) foundResultLine = true;
+        }
+        Assert.assertTrue("Result lines should exist after ----", foundResultLine);
+    }
+
+    @Test public void testResultSectionExitsOnBlankLine() throws IOException {
+        // After blank line following results, next directive should be recognized
+        String input = "query I\nSELECT 1\n----\n42\n\nstatement ok\nSELECT 2\n";
+        List<TokenInfo> tokens = tokenize(input);
+        boolean foundStatement = false;
+        boolean afterResult = false;
+        for (TokenInfo t : tokens) {
+            if (t.type == TestTypes.Q_RESULT) afterResult = true;
+            if (afterResult && t.type == TestTypes.STATEMENT) foundStatement = true;
+        }
+        Assert.assertTrue("Statement should be recognized after result section ends", foundStatement);
+    }
+
     // ---- Helper ----
 
     static class TokenInfo {

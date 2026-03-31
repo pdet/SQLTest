@@ -74,24 +74,39 @@ public class SQLTestStructureViewElement implements StructureViewTreeElement, So
                        trimmed.startsWith("concurrentloop ") || trimmed.startsWith("concurrentforeach ")) {
                 label = trimmed;
                 iconType = "loop";
-            } else if (trimmed.startsWith("require ") || trimmed.startsWith("require-env ")) {
+            } else if (trimmed.startsWith("require ") || trimmed.startsWith("require-env ") ||
+                       trimmed.startsWith("require_reinit")) {
                 label = trimmed;
                 iconType = "require";
-            } else if (trimmed.startsWith("load ")) {
+            } else if (trimmed.startsWith("load") || trimmed.startsWith("reload") ||
+                       trimmed.startsWith("init") || trimmed.startsWith("cleanup")) {
                 label = trimmed;
                 iconType = "load";
             } else if (trimmed.startsWith("skipif ") || trimmed.startsWith("onlyif ")) {
                 label = trimmed;
                 iconType = "condition";
-            } else if (trimmed.startsWith("mode ")) {
+            } else if (trimmed.startsWith("mode ") || trimmed.startsWith("resultmode ") ||
+                       trimmed.startsWith("hash-threshold ")) {
                 label = trimmed;
                 iconType = "mode";
             } else if (trimmed.equals("halt")) {
                 label = "halt";
                 iconType = "halt";
-            } else if (trimmed.equals("restart")) {
-                label = "restart";
+            } else if (trimmed.equals("restart") || trimmed.equals("reconnect")) {
+                label = trimmed;
                 iconType = "restart";
+            } else if (trimmed.startsWith("template ") || trimmed.startsWith("include ")) {
+                label = trimmed;
+                iconType = "load";
+            } else if (trimmed.startsWith("sleep ") || trimmed.startsWith("unzip ") ||
+                       trimmed.startsWith("test-env ") || trimmed.startsWith("tags ") ||
+                       trimmed.startsWith("cache ") || trimmed.startsWith("cache_file ") ||
+                       trimmed.startsWith("run") || trimmed.startsWith("assert ") ||
+                       trimmed.startsWith("result_query ") || trimmed.startsWith("argument ") ||
+                       trimmed.startsWith("subgroup ") || trimmed.startsWith("storage ") ||
+                       trimmed.startsWith("retry ") || trimmed.startsWith("physical_plan")) {
+                label = trimmed;
+                iconType = "mode";
             }
 
             if (label != null) {

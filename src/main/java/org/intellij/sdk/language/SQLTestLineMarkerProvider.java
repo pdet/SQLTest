@@ -21,8 +21,9 @@ public class SQLTestLineMarkerProvider implements LineMarkerProvider {
 
     @Override
     public @Nullable LineMarkerInfo<?> getLineMarkerInfo(@NotNull PsiElement element) {
-        if (element.getNode().getElementType() != TestTypes.STATEMENT &&
-            element.getNode().getElementType() != TestTypes.QUERY) {
+        if (element.getNode() == null ||
+            (element.getNode().getElementType() != TestTypes.STATEMENT &&
+             element.getNode().getElementType() != TestTypes.QUERY)) {
             return null;
         }
 
@@ -49,6 +50,12 @@ public class SQLTestLineMarkerProvider implements LineMarkerProvider {
             } else if (afterKeyword.startsWith("maybe")) {
                 icon = AllIcons.RunConfigurations.TestIgnored;
                 tooltip = "Statement expects maybe";
+            } else if (afterKeyword.startsWith("debug_skip")) {
+                icon = AllIcons.RunConfigurations.TestIgnored;
+                tooltip = "Statement debug skip";
+            } else if (afterKeyword.startsWith("debug")) {
+                icon = AllIcons.RunConfigurations.TestIgnored;
+                tooltip = "Statement debug output";
             } else {
                 return null;
             }
